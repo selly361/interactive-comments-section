@@ -1,9 +1,16 @@
-import React, { useEffect, useState, createContext, Fragment } from "react";
+import React, {
+  useEffect,
+  useState,
+  createContext,
+  Fragment,
+  useRef,
+} from "react";
 import Comment from "../Comment/Comment";
 import ReplyComment from "../Comment/ReplyComment";
 import "./comments.styles.scss";
 import commentsData from "../../../assets/data.json";
 import { v4 as uuid } from "uuid";
+import moment from "moment";
 
 let updatedCommentsData = commentsData.comments;
 updatedCommentsData.map((comment) => {
@@ -12,6 +19,7 @@ updatedCommentsData.map((comment) => {
 });
 
 console.log(updatedCommentsData);
+
 
 export const CommentsProvider = createContext({});
 
@@ -23,15 +31,45 @@ const Comments = () => {
   const [currentUser, setCurrentUser] = useState(commentsData.currentUser);
   const [text, setText] = useState("");
 
+  const formRef = useRef();
+
+  const scrollToBottom = () => {
+    formRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [comments.length]);
+
+
+  useEffect(() => {
+    setTimeout(() => {
+      let copy = comments;
+      let foundcomment = copy.filter(com => com.created)
+      foundcomment.map(c => c.createdAt = (moment(c.created).fromNow()))
+      localStorage.setItem("comments", JSON.stringify(copy))
+    }, 1000)
+
+
+    return () => clearTimeout()
+  })
+
+
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let copy = comments;
 
+    let id = uuid()
+
     copy = [
       ...copy,
       {
-        id: uuid(),
+        id: id,
         content: text,
+        created: new Date(),
+        createdAt: 'a few seconds ago',
         votes: 0,
         user: {
           image: {
@@ -39,12 +77,13 @@ const Comments = () => {
           },
           username: "juliusomo",
         },
-        replies: []
+        replies: [],
       },
     ];
 
     localStorage.setItem("comments", JSON.stringify(copy));
     setComments(JSON.parse(localStorage.getItem("comments")));
+
   };
 
   return (
@@ -62,7 +101,7 @@ const Comments = () => {
             </div>
           </Fragment>
         ))}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} ref={formRef}>
           <img src={currentUser.image.png} />
           <fieldset>
             <textarea

@@ -26,7 +26,6 @@ const Vote = ({ votes, setComments, comments, id, isReply = false }) => {
       return c.replies.find(c => c.id === id)
     })[0]
 
-    console.log(found)
 
     if(type == 'upvote'){
       found.votes += 1

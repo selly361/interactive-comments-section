@@ -20,6 +20,7 @@
         justify-content: space-between;
 
 
+
         div:first-child {
             display: flex;
             gap: 1rem;
@@ -62,4 +63,29 @@
        margin-top: 1rem;
 
     }
+}
+
+
+.functional-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    h2 {
+        display: flex;
+        gap: .2rem;
+        font-size: 1rem;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .blue-icon {
+        color: #5457b6;
+    }
+
+    .red-icon {
+        color: #ed6468;
+    }
+
+    
 }
