@@ -1,0 +1,25 @@
+.vote-container {
+    background-color: hsl(223deg, 19%, 93%);
+    width: max-content;
+    height: max-content;
+    padding: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 10px;
+
+
+
+
+
+    h2 {
+        color: hsl(238deg, 40%, 52%);
+        font-size: 1rem;
+        font-family: Rubik;
+    }
+
+    .icon {
+        cursor: pointer;
+    }
+}

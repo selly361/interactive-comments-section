@@ -1,0 +1,52 @@
+.comment-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: white;
+    padding: 1rem;
+
+
+    .vote-wrapper {
+        height: 100%;
+        width: 200px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .top-section {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+
+
+        div:first-child {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+
+            .username {
+                font-size: 1rem;
+            }
+
+            img {
+                height: 30px;
+            }
+
+            span {
+                color: hsl(211deg, 10%, 45%);
+            }
+        }
+    }
+
+
+    .user-container {
+        gap: 1rem;
+        display: flex;
+        flex-flow: column;
+
+
+        p {
+            color: hsl(211deg, 10%, 45%);
+        }
+    }
+}
