@@ -1,11 +1,79 @@
 .comments-wrapper {
     width: 50vw;
     height: max-content;
-    border: 1px solid black;
     display: flex;
     flex-flow: column;
     align-items: center;
-    gap: 2rem;
-    padding: 2rem;
+    gap: 1rem;
+
+
+    div:first-child {
+
+
+    }
+
+    .replies {
+        display: flex;
+        align-items: flex-end;
+        flex-flow: column;
+        height: max-content;
+        gap: 1rem;
+        position: relative;
+
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 1.6rem;
+            height: 100%;
+            width: 1px;
+            background-color: hsl(211deg, 10%, 45%);
+            opacity: 0.2
+        }
+
+
+        
+    }
+
+
+    form {
+        height: 110px;
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+        background-color: white;
+        align-items: flex-start;
+        padding-top: 1rem;
+
+
+        img {
+            object-fit: contain;
+            height: 40px;
+        }
+
+        fieldset {
+            border: none;
+            width: 90%;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+
+            textarea {
+                resize: none;
+                width: 85%;
+                height: 80px;
+                border: 1px solid black;
+                padding: 1rem;
+            }
+
+            button {
+                padding: .8rem 1rem;
+                border: none;
+                cursor: pointer;
+                color: white;
+                background-color: hsl(238deg, 40%, 52%);
+            }
+        }
+    }
 }
 

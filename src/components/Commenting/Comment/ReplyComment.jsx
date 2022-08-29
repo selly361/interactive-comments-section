@@ -4,14 +4,15 @@ import { CommentsProvider } from "../Comments/Comments";
 import "./comment.styles.scss";
 import { ReactComponent as ReplyIcon } from "../../../assets/images/icon-reply.svg";
 
-const Comment = ({ id, content, createdAt, votes, user, replyClass, isReplyComment = false }) => {
+const ReplyComment = ({ id, content, createdAt, votes, user }) => {
   const { comments, setComments } = useContext(CommentsProvider);
 
+
   return (
-    <div className={`comment-container + ${replyClass}`}>
+    <div className={`comment-container reply-comment-container`}>
       <div className="vote-wrapper">
         <Vote
-          isReplyComment={isReplyComment}
+          isReply={true}
           votes={votes}
           setComments={setComments}
           comments={comments}
@@ -39,4 +40,4 @@ const Comment = ({ id, content, createdAt, votes, user, replyClass, isReplyComme
   );
 };
 
-export default Comment;
+export default ReplyComment;
