@@ -1,4 +1,4 @@
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useState } from "react";
 import Vote from "../../ui/Votes/Vote";
 import { CommentsProvider } from "../Comments/Comments";
 import "./comment.styles.scss";
@@ -12,6 +12,7 @@ const Comment = ({
   createdAt,
   votes,
   user,
+  edit,
   replyClass,
   isReplyComment = false,
 }) => {
@@ -21,10 +22,36 @@ const Comment = ({
     let copy = comments;
     copy = copy.filter((c) => c.id !== id);
 
-
     localStorage.setItem("comments", JSON.stringify(copy));
     setComments(copy);
   };
+
+  const [updatedText, setUpdatedText] = useState(content)
+
+  const handleEdit = () => {
+    let copy = comments;
+
+    let found = copy.filter((copy) => copy.id === id)[0];
+    found.edit = !found.edit;
+
+    
+    localStorage.setItem("comments", JSON.stringify(copy));
+    setComments(JSON.parse(localStorage.getItem("comments")));
+  };
+
+
+  const handleUpdate = () => {
+    let copy = comments;
+
+    let found = copy.filter((copy) => copy.id === id)[0];
+
+    found.content = updatedText;
+    found.edit = false;
+
+
+    localStorage.setItem("comments", JSON.stringify(copy));
+    setComments(JSON.parse(localStorage.getItem("comments")));
+  }
 
   return (
     <div className={`comment-container + ${replyClass}`}>
@@ -55,7 +82,7 @@ const Comment = ({
                   <DeleteIcon />
                   Delete
                 </h2>
-                <h2 className="blue-icon">
+                <h2 className="blue-icon" onClick={handleEdit}>
                   <EditIcon />
                   Edit
                 </h2>
@@ -70,9 +97,16 @@ const Comment = ({
             )}
           </div>
         </div>
-        <div className="content-section">
-          <p>{content}</p>
-        </div>
+        {edit ? (
+          <div className="content-section">
+            <textarea onChange={(e) => setUpdatedText(e.target.value)} className="edit-textarea">{updatedText}</textarea>
+            <button className="update-button" onClick={handleUpdate}>UPDATE</button>
+          </div>
+        ) : (
+          <div className="content-section">
+            <p>{content}</p>
+          </div>
+        )}
       </div>
     </div>
   );

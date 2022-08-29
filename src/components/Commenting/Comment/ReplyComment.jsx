@@ -11,12 +11,24 @@ const ReplyComment = ({ id, content, createdAt, votes, user }) => {
 
   const handleDelete = () => {
     let copy = comments;
-    copy.filter(comment => comment.replies.length !== 0).map(c => c.replies).filter(c => c.id !== id)
 
-    localStorage.setItem("comments", JSON.stringify(copy))
-    setComments(copy)
+    let arr = copy.map(item => item.replies).flat()
+    let indexToRemove = arr.map(c => c.id).indexOf(id)
 
-  }
+
+
+    for(let comment of copy){
+      if(comment.replies.length){
+        comment.replies = comment.replies.flat().filter(c => c.id !== id)
+      }
+    }
+    
+    console.log(copy)
+
+
+    localStorage.setItem("comments", JSON.stringify(copy));
+    setComments(JSON.parse(localStorage.getItem("comments")));
+  };
 
   return (
     <div className={`comment-container reply-comment-container`}>
@@ -30,7 +42,7 @@ const ReplyComment = ({ id, content, createdAt, votes, user }) => {
         />
       </div>
       <div className="user-container">
-        <div  className="top-section">
+        <div className="top-section">
           <div>
             <div>
               <img
@@ -44,16 +56,18 @@ const ReplyComment = ({ id, content, createdAt, votes, user }) => {
             {user.username === "juliusomo" ? (
               <Fragment>
                 <h2 className="red-icon" onClick={handleDelete}>
-                <DeleteIcon />Delete
+                  <DeleteIcon />
+                  Delete
                 </h2>
                 <h2 className="blue-icon">
-                <EditIcon />Edit
+                  <EditIcon />
+                  Edit
                 </h2>
               </Fragment>
             ) : (
               <Fragment>
                 <h2 className="blue-icon">
-                <ReplyIcon />
+                  <ReplyIcon />
                   Reply
                 </h2>
               </Fragment>

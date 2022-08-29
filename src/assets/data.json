@@ -6,7 +6,7 @@
     },
     "username": "juliusomo"
   },
-  "comments": [
+  "comments": [ 
     {
       "id": "fff",
       "content": "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.",
@@ -59,7 +59,8 @@
               "png": "../../../assets/avatars/image-juliusomo.png",
               "webp": "../../../assets/avatars/image-juliusomo.webp"
             },
-            "username": "juliusomo"
+            "username": "juliusomo",
+            "edit": false
           }
         }
       ]

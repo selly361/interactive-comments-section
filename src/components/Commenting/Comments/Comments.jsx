@@ -78,6 +78,7 @@ const Comments = () => {
           username: "juliusomo",
         },
         replies: [],
+        edit: false
       },
     ];
 
@@ -96,7 +97,7 @@ const Comments = () => {
             <Comment {...comment} />
             <div className="replies">
               {comment.replies.map((comment) => (
-                <ReplyComment {...comment} />
+                <ReplyComment {...comment} comment={comment} />
               ))}
             </div>
           </Fragment>
