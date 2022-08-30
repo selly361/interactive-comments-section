@@ -1,4 +1,4 @@
-import { useContext, Fragment } from "react";
+import { useContext, Fragment, useState } from "react";
 import Vote from "../../ui/Votes/Vote";
 import { CommentsProvider } from "../Comments/Comments";
 import "./comment.styles.scss";
@@ -6,15 +6,14 @@ import { ReactComponent as ReplyIcon } from "../../../assets/images/icon-reply.s
 import { ReactComponent as EditIcon } from "../../../assets/images/icon-edit.svg";
 import { ReactComponent as DeleteIcon } from "../../../assets/images/icon-delete.svg";
 
-const ReplyComment = ({ id, content, createdAt, votes, user }) => {
+const ReplyComment = ({ id, content, createdAt, votes, user, edit }) => {
   const { comments, setComments } = useContext(CommentsProvider);
+  const [updatedText, setUpdatedText] = useState(content)
 
   const handleDelete = () => {
     let copy = comments;
 
     let arr = copy.map(item => item.replies).flat()
-    let indexToRemove = arr.map(c => c.id).indexOf(id)
-
 
 
     for(let comment of copy){
@@ -29,6 +28,40 @@ const ReplyComment = ({ id, content, createdAt, votes, user }) => {
     localStorage.setItem("comments", JSON.stringify(copy));
     setComments(JSON.parse(localStorage.getItem("comments")));
   };
+
+  const handleEdit = () => {
+    let copy = comments;
+
+      
+    let arr = copy.map(item => item.replies).flat()
+
+    for(let reply of arr){
+        if(reply.id === id){
+          reply.edit = !reply.edit
+        }
+    }
+
+    
+    localStorage.setItem("comments", JSON.stringify(copy));
+    setComments(JSON.parse(localStorage.getItem("comments")));
+  };
+
+  const handleUpdate = () => {
+    let copy = comments;
+
+    
+    let arr = copy.map(item => item.replies).flat()
+
+    for(let reply of arr){
+        if(reply.id === id){
+          reply.content = updatedText;
+          reply.edit = false
+        }
+    }
+
+    localStorage.setItem("comments", JSON.stringify(copy));
+    setComments(JSON.parse(localStorage.getItem("comments")));
+  }
 
   return (
     <div className={`comment-container reply-comment-container`}>
@@ -59,7 +92,7 @@ const ReplyComment = ({ id, content, createdAt, votes, user }) => {
                   <DeleteIcon />
                   Delete
                 </h2>
-                <h2 className="blue-icon">
+                <h2 className="blue-icon" onClick={handleEdit}>
                   <EditIcon />
                   Edit
                 </h2>
@@ -74,9 +107,16 @@ const ReplyComment = ({ id, content, createdAt, votes, user }) => {
             )}
           </div>
         </div>
-        <div className="content-section">
-          <p>{content}</p>
-        </div>
+          {edit && user.username === "juliusomo" ? (
+          <div className="content-section">
+            <textarea onChange={(e) => setUpdatedText(e.target.value)} className="edit-textarea" value={updatedText} />
+            <button className="update-button" onClick={handleUpdate}>UPDATE</button>
+          </div>
+        ) : (
+          <div className="content-section">
+            <p>{content}</p>
+          </div>
+        )}
       </div>
     </div>
   );

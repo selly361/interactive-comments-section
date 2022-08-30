@@ -60,6 +60,7 @@ const Comments = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let copy = comments;
+    
 
     let id = uuid()
 
@@ -78,7 +79,8 @@ const Comments = () => {
           username: "juliusomo",
         },
         replies: [],
-        edit: false
+        edit: false,
+        reply: false
       },
     ];
 

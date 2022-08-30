@@ -11,6 +11,7 @@
     .replies {
         display: flex;
         align-items: flex-end;
+        width: 100%;
         flex-flow: column;
         height: max-content;
         gap: 1rem;
